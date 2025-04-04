@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Live Model Weights</title>
+  <style>
+    #output {
+      white-space: pre-wrap;
+      font-family: monospace;
+      border: 1px solid #ccc;
+      padding: 10px;
+      max-height: 500px;
+      overflow-y: scroll;
+    }
+  </style>
+</head>
+<body>
+
+<h2>Live Trained Model Data</h2>
+<div id="output">Loading latest model data...</div>
+<div id="output2">Loading latest model data...</div>
+
+<script>
+  function fetchModelData() {
+    fetch('http://localhost:5000/predict')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+      });
+  }
+  function fetchModelData2() {
+    fetch('http://localhost:5000/predict2')
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('output2').textContent = JSON.stringify(data, null, 2);
+      });
+  }
+  fetchModelData2(); // Initial load
+  fetchModelData(); // Initial load
+  setInterval(fetchModelData, 5000); // Refresh every 5 seconds
+</script>
+
+</body>
+</html>
