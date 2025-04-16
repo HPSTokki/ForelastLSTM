@@ -1,15 +1,4 @@
-Split Test Commmand - Use this instead of using total_samples
-
-def get_data_points(X1, y1, train_size = 0.8, val_size = 0.1, test_size = 0.1):
-    assert train_size + val_size + test_size == 1.0
-    
-    total_samples = len(X1)
-    
-    train_end = int(total_samples * train_size)
-    val_end = int(total_samples * (train_size + val_size))
-    
-    num_train = train_end
-    num_val = val_end - train_end
-    num_test = total_samples - val_end
-    
-    return num_train, num_val, num_test
+4/14/2025
+    - Verify weatherFetcher.py (check everyday)
+    - Fix and Finish the multivariate
+    - Arrange backend for prior connection to frontend

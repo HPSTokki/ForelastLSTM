@@ -1,8 +1,13 @@
 import csv
 import requests
 import os
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
+# dont abuse my API key lol
+
+
+today = date.today()
+date_yesterday = today - timedelta(days=1)
 API_KEY = "YXNCE77CXCVXRPX63EW7652JS"
 
 cities = ['Caloocan',
@@ -22,8 +27,10 @@ cities = ['Caloocan',
           'Taguig',
           'Valenzuela']
 
+# this one is fetching
+
 def fetch_daily_weather(city):
-    url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{city}%20City/2025-04-12/2025-04-12?unitGroup=metric&include=days&key={API_KEY}"
+    url = f"https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/{city}%20City/{date_yesterday}/{today}?unitGroup=metric&include=days&key={API_KEY}"
     params = {
         'unitGroup': 'metric',
         'key' : API_KEY,
@@ -36,7 +43,7 @@ def fetch_daily_weather(city):
         
         if 'days' in data and len(data['days']) > 0:
             for day in data['days']:
-                weather_list.append({
+                full_data = {
                     'name' : day.get('name', ''),
                     'datetime' : day.get('datetime', ''),
                     'tempmax' : day.get('tempmax', ''),
@@ -70,6 +77,20 @@ def fetch_daily_weather(city):
                     'description' : day.get('description', ''),
                     'icon' : day.get('icon', ''),
                     'stations' : day.get('stations', '')
+                }
+                filtered_data = {
+                    'name': full_data['name'],
+                    'datetime': full_data['datetime'],
+                    'tempmax': full_data['tempmax'],
+                    'tempmin': full_data['tempmin'],
+                    'temp': full_data['temp'],
+                    'humidity': full_data['humidity'],
+                    'precip': full_data['precip'],
+                    'windspeed': full_data['windspeed']
+                }
+                weather_list.append({
+                    'full_data': full_data,
+                    'filtered_data': filtered_data
                 })
             return weather_list
         else: print(f"Error fetching weather data for {city}: {response.status_code}")
@@ -77,15 +98,30 @@ def fetch_daily_weather(city):
     
     return None
 
-def append_to_csv(city, weather_list):
-    if not weather_list:
-        return
-    
-    for row in weather_list:
-        row['name'] = city
+# idk this is like the one that appends lmao
 
+def append_to_csv(city, full_city_name, weather_list):
     
     filename = f"./WeatherData/{city} City Weather Data.csv"
+    
+    existing_data = update_csv_if_data_exists(filename)
+    
+    existing_cities = {(row['name'], row['datetime']): row for row in existing_data}
+    
+    updated_data = []
+    
+    for row in weather_list:
+        
+        row['name'] = full_city_name
+        row = row['filtered_data']
+        
+        if (row['name'], row['datetime']) in existing_cities:
+            existing_cities[(row['name'],row['datetime'])] = row
+        else:
+            updated_data.append(row)
+    
+    final_data = list(existing_cities.values()) + updated_data
+    
     file_exists = os.path.isfile(filename)
     
     fieldnames = ['name', 'datetime', 'tempmax', 'tempmin', 'temp', 'feelslikemax', 'feelslikemin',
@@ -94,14 +130,22 @@ def append_to_csv(city, weather_list):
         'cloudcover', 'visibility', 'solarradiation', 'solarenergy', 'uvindex', 'severerisk',
         'sunrise', 'sunset', 'moonphase', 'conditions', 'description', 'icon', 'stations']
     
-    with open(filename, mode='a', newline='', encoding='utf-8') as file:
+    with open(filename, mode='w', newline='', encoding='utf-8') as file:
         writer = csv.DictWriter(file, fieldnames=fieldnames)
-        if not file_exists:
-            writer.writeheader()
-        for row in weather_list:
+        writer.writeheader()
+        for row in final_data:
             writer.writerow(row)
+
+def update_csv_if_data_exists(filename):
+    if os.path.isfile(filename):
+        with open(filename, mode='r', newline='', encoding='utf-8') as file:
+            reader = csv.DictReader(file)
+            return list(reader)
+    return []
 
 for city in cities:
     print(f"Fetching weather data for {city}...")
     weather_list = fetch_daily_weather(city)
-    append_to_csv(f"{city} City, National Capital Region, Philippines", weather_list);
+    if weather_list:
+        full_city_name = f"{city} City, National Capital Region, Philippines"
+        append_to_csv(city, full_city_name, weather_list)
