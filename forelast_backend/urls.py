@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/zephyr/', include('forelast_backend.apps.zephyr_ai.urls')),
     path('api/weather/analytics/<str:city>/', WeatherAnalyticsAPI.as_view(), name='weather-analytics'),
+    path('api/', include('forelast_backend.apps.auth_service.urls')),
 ]
