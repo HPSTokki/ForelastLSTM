@@ -9,7 +9,7 @@ load_dotenv()
 
 # Configuration
 today = date.today()
-date_yesterday = today - timedelta(days=1)
+date_yesterday = today - timedelta(days=2)
 API_KEY = "YXNCE77CXCVXRPX63EW7652JS"
 
 # Supabase configuration
