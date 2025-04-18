@@ -9131,3 +9131,5 @@ name,datetime,tempmax,tempmin,temp,humidity,precip,windspeed
 "Mandaluyong, NCR",2024-12-29,29.1,23,25.9,83.2,2.347,16
 "Mandaluyong, NCR",2024-12-30,30,23.7,26,93.1,8.444,14.4
 "Mandaluyong, NCR",2024-12-31,32,24.1,27.4,83.4,3.713,14.4
+"Mandaluyong City, National Capital Region, Philippines",2025-04-16,37.0,29.0,31.9,61.7,2.0,16.6
+"Mandaluyong City, National Capital Region, Philippines",2025-04-17,37.0,26.0,31.3,61.3,0.0,20.5
