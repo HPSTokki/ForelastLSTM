@@ -20,4 +20,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/zephyr/', include('forelast_backend.apps.zephyr_ai.urls')),
+    path('api/', include('forelast_backend.apps.auth_service.urls')),
 ]
