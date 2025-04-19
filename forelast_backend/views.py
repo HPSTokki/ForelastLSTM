@@ -14,6 +14,87 @@ load_dotenv()
 # Configure logging
 logger = logging.getLogger(__name__)
 
+
+class CurrentWeatherAPI(View):
+    """API endpoint for getting current weather data only"""
+    
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get(self, request, city):
+        try:
+            supabase = self._get_supabase_client()
+            forecast_table = self._get_forecast_table_name(city)
+            
+            response = supabase.table(forecast_table)\
+                .select("*")\
+                .order('datetime', desc=True)\
+                .limit(1)\
+                .execute()
+            
+            if not response.data:
+                return JsonResponse(
+                    {'error': 'No forecast data available'}, 
+                    status=404
+                )
+                
+            current_data = response.data[0]
+            
+            return JsonResponse({
+                'city': city.title(),
+                'temperature': current_data.get('temp', '--'),
+                'weather_condition': self._get_weather_condition(current_data),
+                'humidity': current_data.get('humidity', '--'),
+                'last_updated': datetime.now().isoformat()
+            }, content_type="application/json")
+            
+        except Exception as e:
+            logger.error(f"Error fetching current weather for {city}: {str(e)}")
+            return JsonResponse(
+                {'error': 'Failed to fetch current weather', 'details': str(e)},
+                status=500
+            )
+
+    def _get_supabase_client(self):
+        """Initialize and return Supabase client"""
+        return create_client(
+            os.getenv('SUPABASE_URL'), 
+            os.getenv('SUPABASE_KEY')
+        )
+
+    def _get_forecast_table_name(self, city):
+        """Get table name for forecast data"""
+        base_name = self._normalize_city_name(city)
+        return f"{base_name}_city_forecast"
+
+    def _normalize_city_name(self, city):
+        """Normalize city name for table lookup"""
+        city = city.lower().strip().replace(' ', '_').replace('ñ', 'n')
+        special_cases = {
+            "las_piñas": "las_pinas",
+            "marikina": "markina",
+            "parañaque": "paranaque",
+            "caloocan": "caloocan",
+            "quezon_city": "quezon",
+            "manila": "manila"
+        }
+        return special_cases.get(city, city)
+
+    def _get_weather_condition(self, data):
+        """Determine weather condition based on weather data"""
+        temp = data.get('temp', 0)
+        precip = data.get('precip', 0)
+        
+        if precip > 5:
+            return 'Rainy'
+        elif temp > 30:
+            return 'Sunny'
+        elif temp > 25:
+            return 'Partly Cloudy'
+        else:
+            return 'Cloudy'
+
 @method_decorator(csrf_exempt, name='dispatch')
 class WeatherAnalyticsAPI(View):
     def get(self, request, city):

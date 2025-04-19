@@ -16,11 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import WeatherAnalyticsAPI
+from .views import WeatherAnalyticsAPI, CurrentWeatherAPI
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/zephyr/', include('forelast_backend.apps.zephyr_ai.urls')),
     path('api/weather/analytics/<str:city>/', WeatherAnalyticsAPI.as_view(), name='weather-analytics'),
+    path('api/internal/', include([
+        path('current/<str:city>/', CurrentWeatherAPI.as_view()),])),
     path('api/', include('forelast_backend.apps.auth_service.urls')),
 ]
