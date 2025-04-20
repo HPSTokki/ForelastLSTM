@@ -33,13 +33,13 @@ zephyr_data = {
                 "Can you tell me about FORELAST?",
                 "Who made FORELAST?",
                 "What does FORELAST do?",
-                "Where can I find more information about FORELAST?"
+                "Who is Zephyr?"
             ],
             "answers": [
                 "FORELAST is a weather forecasting website that utilizes an LSTM or long short-term memory neural network.",
                 "FORELAST was made by a group of students from Quezon City University as a part of their Software Engineering project.",
                 "FORELAST is designed to provide accurate and reliable weather forecasts for locations within the National Capital Region of the Philippines.",
-                "You can visit the FORELAST website for more detailed information."
+                "Zephyr is your weather buddy, your helpful chatbot for answering any FORELAST-related queries. It's nice to meet you!"
             ]
         },
         "weather_queries": {
@@ -68,6 +68,19 @@ zephyr_data = {
                 "Based on the weather data, there’s a X chance of rain tomorrow. If you're traveling, make sure to take necessary precautions.",
                 "It looks like a nice day for a walk today. The weather is mild, with temperatures around X°C.",
                 "Tomorrow, the forecast predicts thunderstorms. It’s safer to avoid outdoor activities during this time."
+            ]
+        },
+        "greetings": {
+            "questions": [
+                "Hello", "Hi", "Hey", "Good morning", "Good afternoon", "Good evening"
+            ],
+            "answers": [
+                "Hello there! 😊 How can I assist you with FORELAST today?",
+                "Hi! I'm here to help you with any FORELAST-related questions 🌤️",
+                "Hey! Got any questions about FORELAST? I’ve got answers!",
+                "Good morning! Ready to check the weather with me? ☀️",
+                "Good afternoon! Need weather updates or info on FORELAST?",
+                "Good evening! I'm here to help if you have any FORELAST questions 🌙"
             ]
         }
     },
@@ -101,7 +114,7 @@ def process_message(user_message):
             question_doc = nlp(question)
             similarity = user_input.similarity(question_doc)
             
-            if similarity > best_score and similarity > 0.75:  # you can tweak threshold here
+            if similarity > best_score and similarity > 0.75:  
                 best_score = similarity
                 best_answer = answers[i]
 
