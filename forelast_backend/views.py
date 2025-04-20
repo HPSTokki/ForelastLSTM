@@ -26,9 +26,11 @@ class CurrentWeatherAPI(View):
         try:
             supabase = self._get_supabase_client()
             forecast_table = self._get_forecast_table_name(city)
+            today = datetime.now().date().strftime('%Y-%m-%d')
             
             response = supabase.table(forecast_table)\
                 .select("*")\
+                .eq('datetime', today)\
                 .order('datetime', desc=True)\
                 .limit(1)\
                 .execute()
@@ -46,6 +48,8 @@ class CurrentWeatherAPI(View):
                 'temperature': current_data.get('temp', '--'),
                 'weather_condition': self._get_weather_condition(current_data),
                 'humidity': current_data.get('humidity', '--'),
+                'precip': current_data.get('precip', 0),
+                'windspeed': current_data.get('windspeed', '--'),
                 'last_updated': datetime.now().isoformat()
             }, content_type="application/json")
             
@@ -86,11 +90,11 @@ class CurrentWeatherAPI(View):
         temp = data.get('temp', 0)
         precip = data.get('precip', 0)
         
-        if precip > 5:
+        if (temp >= 26 or temp <= 20) and precip > 50:
             return 'Rainy'
-        elif temp > 30:
+        elif temp > 27:
             return 'Sunny'
-        elif temp > 25:
+        elif temp > 23:
             return 'Partly Cloudy'
         else:
             return 'Cloudy'
