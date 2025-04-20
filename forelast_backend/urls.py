@@ -25,4 +25,5 @@ urlpatterns = [
     path('api/internal/', include([
         path('current/<str:city>/', CurrentWeatherAPI.as_view()),])),
     path('api/', include('forelast_backend.apps.auth_service.urls')),
+    path('api/', include('forelast_backend.apps.email_services.urls')),
 ]
