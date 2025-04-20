@@ -112,18 +112,7 @@ def print_summary_report(results):
 if __name__ == "__main__":
     # Configuration
     csv_files = [
-        './WeatherData2/Caloocan City Weather Data.csv',
-        './WeatherData2/Makati City Weather Data.csv',
-        './WeatherData2/Malabon City Weather Data.csv',
-        './WeatherData2/Mandaluyong City Weather Data.csv',
-        './WeatherData2/Manila City Weather Data.csv',
-        './WeatherData2/Muntinlupa City Weather Data.csv',
-        './WeatherData2/Navotas City Weather Data.csv',
-        './WeatherData2/Pasay City Weather Data.csv',
-        './WeatherData2/Pateros City Weather Data.csv',
-        './WeatherData2/San Juan City Weather Data.csv',
-        './WeatherData2/Taguig City Weather Data.csv',
-        './WeatherData2/Valenzuela City Weather Data.csv',
+        './WeatherData/Makati City Weather Data.csv',
         
     ]
     
