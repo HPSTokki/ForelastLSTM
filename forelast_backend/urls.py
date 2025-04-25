@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import WeatherAnalyticsAPI, CurrentWeatherAPI, WeatherDataDownloadAPI, WeatherDataPreviewAPI
+from .views import WeatherAnalyticsAPI, CurrentWeatherAPI, WeatherDataDownloadAPI, WeatherDataPreviewAPI, TopCitiesAPI
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/internal/analytics/<str:city>/', WeatherAnalyticsAPI.as_view(), name='internal-weather-analytics'),
     path('api/internal/analytics/<str:city>/preview/', WeatherDataPreviewAPI.as_view(), name='weather-data-preview'),
     path('api/internal/analytics/<str:city>/download/', WeatherDataDownloadAPI.as_view(), name='weather-data-download'),
+    path('api/weather/top-cities', TopCitiesAPI.as_view(), name='top-cities-api'),
     path('api/', include('forelast_backend.apps.auth_service.urls')),
     path('api/', include('forelast_backend.apps.email_services.urls')),
     

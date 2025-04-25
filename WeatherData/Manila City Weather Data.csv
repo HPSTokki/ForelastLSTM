@@ -9236,13 +9236,12 @@ name,datetime,tempmax,tempmin,temp,humidity,precip,windspeed
 "Manila, National Capital Region, Philippines",2025-04-13,34.5,26.1,29.1,72.1,1.082,32.8
 "Manila, National Capital Region, Philippines",2025-04-14,35,26.7,29.9,70,0,19.6
 "Manila, National Capital Region, Philippines",2025-04-15,34,26.5,29.4,71.2,0,21.2
-"Manila City, National Capital Region, Philippines",2025-04-16,36.9,28.9,31.8,62.0,2.0,16.6
-"Manila City, National Capital Region, Philippines",2025-04-17,36.9,25.9,31.3,61.3,0.0,17.3
-"Manila City, National Capital Region, Philippines",2025-04-18,36.0,25.0,31.0,62.3,0.6,24.1
-"Manila City, National Capital Region, Philippines",2025-04-19,34.8,28.0,30.8,58.7,0.3,29.5
-"Manila City, National Capital Region, Philippines",2025-04-20,35.0,26.9,30.9,59.1,0.0,27.4
-"Manila City, National Capital Region, Philippines",2025-04-21,34.4,27.9,31.1,60.6,0.2,29.9
-"Manila City, National Capital Region, Philippines",2025-04-22,35.9,26.7,31.8,60.0,0.0,14.8
-"Manila City, National Capital Region, Philippines",2025-04-23,35.9,27.9,31.5,71.1,0.3,20.1
-"Manila City, National Capital Region, Philippines",2025-04-24,35.9,28.8,31.8,61.8,0.0,14.8
-"Manila City, National Capital Region, Philippines",2025-04-25,36.9,27.9,31.5,59.0,0.0,24.8
+
+"Manila City, National Capital Region, Philippines",2025-04-18,36.0,25.1,31.2,62.1,0.0,14.7
+"Manila City, National Capital Region, Philippines",2025-04-19,35.9,27.9,31.6,60.3,0.0,20.4
+"Manila City, National Capital Region, Philippines",2025-04-20,35.0,25.5,31.1,59.9,0.0,20.2
+"Manila City, National Capital Region, Philippines",2025-04-21,35.0,27.7,31.4,62.6,0.0,20.4
+"Manila City, National Capital Region, Philippines",2025-04-22,35.9,26.7,31.7,59.9,0.0,14.8
+"Manila City, National Capital Region, Philippines",2025-04-23,35.9,27.7,31.5,70.9,0.2,20.1
+"Manila City, National Capital Region, Philippines",2025-04-24,35.9,28.9,31.8,62.1,0.0,14.8
+"Manila City, National Capital Region, Philippines",2025-04-25,36.9,27.9,31.8,59.3,0.0,18.4

@@ -112,7 +112,7 @@ def print_summary_report(results):
 if __name__ == "__main__":
     # Configuration
     csv_files = [
-        './WeatherData/Makati City Weather Data.csv',
+        './WeatherData/Pasay City Weather Data.csv',
         
     ]
     
