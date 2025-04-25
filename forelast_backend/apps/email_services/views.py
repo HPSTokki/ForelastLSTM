@@ -44,19 +44,15 @@ def submit_feedback(request):
     if request.method == 'POST':
         try:
             feedback = ""
-            index = 1
 
-            while True:
-                question = request.POST.get(f'question{index}')
-                answer = request.POST.get(f'answer{index}')
+            for key in request.POST:
+                if key.startswith("question"):
+                    answer_key = key.replace("question", "answer")
+                    question = request.POST.get(key)
+                    answer = request.POST.get(answer_key, "No answer")
+                    feedback += f"Question:\n{question}\nAnswer:\n{answer}\n\n"
 
-                if not question or not answer:
-                    break
-
-                feedback += f"Question:\n{question}\nAnswer:\n{answer}\n\n"
-                index += 1
-
-            if index == 1:
+            if not feedback:
                 return JsonResponse({ 'status': 'error', 'message': 'No feedback submitted.' }, status=400)
 
             bug_report = request.POST.get('bugReport', '').strip()
@@ -82,6 +78,7 @@ def submit_feedback(request):
             return JsonResponse({ 'status': 'error', 'message': str(e) }, status=500)
 
     return JsonResponse({ 'status': 'error', 'message': 'Invalid request method' }, status=400)
+
 
 @csrf_exempt
 def forgot_password(request):
