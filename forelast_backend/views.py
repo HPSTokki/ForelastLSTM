@@ -428,3 +428,84 @@ class WeatherDataPreviewAPI(View):
             "manila": "manila"
         }
         return special_cases.get(city, city)
+
+class TopCitiesAPI(View):
+    """API endpoint for getting top cities by temperature"""
+    
+    @method_decorator(csrf_exempt)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+    def get(self, request):
+        try:
+            supabase = self._get_supabase_client()
+            
+            # Get current date
+            today = datetime.now().date().isoformat()
+            
+            # We'll check forecast tables for major cities
+            cities = [
+                "Manila", "Quezon City", "Caloocan", "Las Piñas", "Makati",
+                "Malabon", "Mandaluyong", "Marikina", "Muntinlupa", "Navotas",
+                "Parañaque", "Pasay", "Pasig", "San Juan", "Taguig", "Valenzuela"
+            ]
+            
+            top_cities = []
+            
+            for city in cities:
+                table_name = self._get_forecast_table_name(city)
+                try:
+                    response = supabase.table(table_name)\
+                        .select("temp")\
+                        .eq('datetime', today)\
+                        .limit(1)\
+                        .execute()
+                    
+                    if response.data:
+                        top_cities.append({
+                            'city': city,
+                            'temp': response.data[0].get('temp', 0)
+                        })
+                except Exception as e:
+                    logger.warning(f"Could not fetch data for {city}: {str(e)}")
+                    continue
+            
+            # Sort by temperature (descending) and take top 5
+            top_cities_sorted = sorted(top_cities, key=lambda x: x['temp'], reverse=True)[:5]
+            
+            return JsonResponse({
+                'top_cities': top_cities_sorted,
+                'last_updated': datetime.now().isoformat()
+            })
+            
+        except Exception as e:
+            logger.error(f"Error fetching top cities: {str(e)}")
+            return JsonResponse(
+                {'error': 'Failed to fetch top cities', 'details': str(e)},
+                status=500
+            )
+
+    def _get_supabase_client(self):
+        """Initialize and return Supabase client"""
+        return create_client(
+            os.getenv('SUPABASE_URL'), 
+            os.getenv('SUPABASE_KEY')
+        )
+
+    def _get_forecast_table_name(self, city):
+        """Get table name for forecast data"""
+        base_name = self._normalize_city_name(city)
+        return f"{base_name}_city_forecast"
+
+    def _normalize_city_name(self, city):
+        """Normalize city name for table lookup"""
+        city = city.lower().strip().replace(' ', '_').replace('ñ', 'n')
+        special_cases = {
+            "las_piñas": "las_pinas",
+            "marikina": "markina",
+            "parañaque": "paranaque",
+            "caloocan": "caloocan",
+            "quezon_city": "quezon",
+            "manila": "manila"
+        }
+        return special_cases.get(city, city)
