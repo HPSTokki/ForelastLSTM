@@ -4,8 +4,12 @@ from .utils import zephyr_data, process_message
 import os
 import requests
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
+from supabase import create_client
+import logging
+from django.conf import settings
 
+logger = logging.getLogger(__name__)
 DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
 
 def validate_response(text):
@@ -29,36 +33,20 @@ def chat_view(request):
             "response": weather_response.get('text', ''),
             "source": "weather_api",
             "weather_data": True,
-            "structured_data": weather_response.get('data', {})
+            "structured_data": weather_response.get('data', {}) 
         })
 
-    # Rest of your existing chat_view code...
-    # Get local NLP-based response
+    # Normal chat processing
     local_response = process_message(user_message)
     safe_local_response = validate_response(local_response)
 
-    # Build DeepSeek prompt
     headers = {
         "Authorization": f"Bearer {DEEPSEEK_API_KEY}",
         "Content-Type": "application/json"
     }
 
-    system_prompt = (
-        "You are Zephyr AI, an AI chatbot for FORELAST. Follow these rules strictly:\n"
-        "1. Scope: Only answer questions about FORELAST features, weather data, and policies.\n"
-        "2. For weather queries, direct users to ask about specific cities in NCR.\n"
-        "3. Tone: Be professional and friendly. Avoid sarcasm or jokes.\n"
-        "4. Safety: Never discuss politics, NSFW content, or competitors.\n"
-        "5. Format: Keep responses under 3 sentences.\n"
-        "Available cities: Caloocan, Las Piñas, Makati, Malabon, Mandaluyong, "
-        "Manila, Marikina, Muntinlupa, Navotas, Parañaque, Pasay, Pasig, "
-        "Pateros, Quezon City, San Juan, Taguig, Valenzuela"
-    )
-
-    # If there's a confident local answer, include it in the system message
-    if safe_local_response != zephyr_data["response_logic"]["fallback_response"]:
-        system_prompt += f"\nHere is some structured knowledge that may help you answer:\n\"{safe_local_response}\"\n"
-
+    system_prompt = build_system_prompt(safe_local_response)
+    
     payload = {
         "model": "deepseek-chat",
         "messages": [
@@ -82,14 +70,25 @@ def chat_view(request):
         })
 
     except requests.RequestException as e:
-        # fallback to local response if DeepSeek fails
         return Response({
             "response": safe_local_response,
             "source": "dictionary (DeepSeek failed)"
         }, status=200)
 
+def build_system_prompt(local_response):
+    prompt = (
+        "You are Zephyr AI, an AI chatbot for FORELAST. Follow these rules strictly:\n"
+        "1. Scope: Only answer questions about FORELAST features, weather data, and policies.\n"
+        "2. For weather queries, direct users to ask about specific cities in NCR.\n"
+        "3. Tone: Be professional and friendly. Avoid sarcasm or jokes.\n"
+        "4. Safety: Never discuss politics, NSFW content, or competitors.\n"
+        "5. Format: Keep responses under 3 sentences.\n"
+    )
+    if local_response != zephyr_data["response_logic"]["fallback_response"]:
+        prompt += f"\nHere is some structured knowledge that may help you answer:\n\"{local_response}\"\n"
+    return prompt
+
 def handle_weather_query(user_message):
-    """Handle weather-related queries by calling appropriate APIs"""
     weather_keywords = ['weather', 'temperature', 'forecast', 'humidity', 'rain', 'precipitation']
     if not any(keyword in user_message.lower() for keyword in weather_keywords):
         return None
@@ -101,61 +100,118 @@ def handle_weather_query(user_message):
         'Taguig', 'Valenzuela'
     ]
     
-    city_pattern = r'\b(?:' + '|'.join(cities) + r')\b'
-    match = re.search(city_pattern, user_message, re.IGNORECASE)
-    
-    date_pattern = r'(today|tomorrow|\d{4}-\d{2}-\d{2}|next week)'
-    date_match = re.search(date_pattern, user_message, re.IGNORECASE)
-    date_context = date_match.group(0) if date_match else None
-    
-    if not match:
+    city = extract_city_from_message(user_message, cities)
+    if not city:
         return {
-            'text': (
-                "I can provide weather information for cities in Metro Manila. "
-                "Available cities: " + ", ".join(cities) + ". "
-                "Please specify which city you're interested in."
-            ),
+            'text': "I can provide weather information for cities in Metro Manila. Available cities: " + ", ".join(cities),
             'data': {'available_cities': cities}
         }
     
-    city = match.group(0)
-    
     try:
+        supabase = create_client(settings.SUPABASE_URL, settings.SUPABASE_KEY)
         normalized_city = normalize_city_name(city)
         
-        if date_context and date_context.lower() in ['today', 'tomorrow']:
-            response = requests.get(
-                f'http://localhost:8000/api/internal/current/{normalized_city}/',
-                headers={'Accept': 'application/json'}
-            )
+        # Default to current weather unless specifically asking for analytics
+        if 'analytics' in user_message.lower() or 'statistics' in user_message.lower():
+            return get_analytics_data(supabase, normalized_city, city)
+        else:
+            return get_current_weather(supabase, normalized_city, city)
             
-            if response.status_code == 200:
-                data = response.json()
-                return format_current_weather(city, data, date_context)
-        
-        response = requests.get(
-            f'http://localhost:8000/api/internal/analytics/{normalized_city}/',
-            headers={'Accept': 'application/json'}
-        )
-        
-        if response.status_code == 200:
-            data = response.json()
-            return format_analytics_response(city, data, date_context)
-            
-        return {
-            'text': f"I couldn't retrieve weather data for {city}. Please try again later.",
-            'data': {'city': city, 'error': 'Data unavailable'}
-        }
-        
     except Exception as e:
-        print(f"Error fetching weather data: {str(e)}")
+        logger.error(f"Weather API error for {city}: {str(e)}")
         return {
-            'text': f"I encountered an error while fetching weather data for {city}.",
+            'text': f"Sorry, I couldn't fetch weather data for {city}. Please try again later.",
             'data': {'city': city, 'error': str(e)}
         }
 
+def extract_city_from_message(message, cities):
+    # Create a mapping of normalized city names to their original forms
+    city_mapping = {city.lower().replace('ñ', 'n'): city for city in cities}
+    
+    # Normalize the message for comparison
+    normalized_message = message.lower().replace('ñ', 'n')
+    
+    # Check for each possible city (normalized version)
+    for normalized_city, original_city in city_mapping.items():
+        if normalized_city in normalized_message:
+            return original_city
+    
+    # Try more flexible matching if direct match fails
+    for city in cities:
+        # Match city names with spaces replaced (e.g., "las pinas")
+        if city.lower().replace(' ', '').replace('ñ', 'n') in normalized_message.replace(' ', ''):
+            return city
+        # Match common abbreviations (e.g., "qc" for "quezon city")
+        if city.lower() == "quezon city" and " qc " in f" {normalized_message} ":
+            return city
+    
+    return None
+
+def get_current_weather(supabase, normalized_city, city_name):
+    forecast_table = f"{normalized_city}_city_forecast"
+    today = datetime.now().date().strftime('%Y-%m-%d')
+    
+    response = supabase.table(forecast_table)\
+        .select("*")\
+        .eq('datetime', today)\
+        .order('datetime', desc=True)\
+        .limit(1)\
+        .execute()
+    
+    if not response.data:
+        return {
+            'text': f"No weather data available for {city_name} today",
+            'data': {'city': city_name, 'error': 'No data'}
+        }
+        
+    current_data = response.data[0]
+    
+    weather_data = {
+        'city': city_name,
+        'temperature': f"{current_data.get('temp', '--')}°C",
+        'condition': get_weather_condition(current_data),
+        'humidity': f"{current_data.get('humidity', '--')}%",
+        'precipitation': f"{current_data.get('precip', '0')}mm",
+        'windspeed': f"{current_data.get('windspeed', '--')} km/h",
+        'last_updated': datetime.now().strftime('%Y-%m-%d %H:%M')
+    }
+    
+    return {
+        'text': f"Current weather for {city_name}",
+        'data': weather_data
+    }
+
+def get_analytics_data(supabase, normalized_city, city_name):
+    weather_table = f"{normalized_city}_city_weather"
+    forecast_table = f"{normalized_city}_city_forecast"
+    
+    # Historical data (14 days)
+    end_date = datetime.now()
+    start_date = end_date - timedelta(days=14)
+    historical = supabase.table(weather_table)\
+        .select("*")\
+        .gte('datetime', start_date.isoformat())\
+        .lte('datetime', end_date.isoformat())\
+        .execute()
+    
+    # Forecast data (7 days)
+    forecast = supabase.table(forecast_table)\
+        .select("*")\
+        .gte('datetime', datetime.now().isoformat())\
+        .order('datetime')\
+        .limit(8)\
+        .execute()
+        
+    return {
+        'text': f"Weather data overview for {city_name}",
+        'data': {
+            'city': city_name,
+            'historical_days': len(historical.data) if historical.data else 0,
+            'forecast_days': len(forecast.data) if forecast.data else 0
+        }
+    }
+
 def normalize_city_name(city):
-    """Normalize city name for API requests"""
     city = city.lower().strip().replace(' ', '_').replace('ñ', 'n')
     special_cases = {
         "las_piñas": "las_pinas",
@@ -165,56 +221,17 @@ def normalize_city_name(city):
     }
     return special_cases.get(city, city)
 
-def format_current_weather(city, data, time_context="now"):
-    """Format current weather API response"""
-    time_text = {
-        'today': "Today in",
-        'tomorrow': "Tomorrow in",
-    }.get(time_context.lower(), "Current weather in")
+def get_weather_condition(data):
+    temp = data.get('temp', 0)
+    precip = data.get('precip', 0)
     
-    weather_data = {
-        'city': city,
-        'temperature': data.get('temperature', '--'),
-        'condition': data.get('weather_condition', '--'),
-        'humidity': data.get('humidity', '--'),
-        'precipitation': data.get('precip', '0'),
-        'wind_speed': data.get('windspeed', '--'),
-        'last_updated': data.get('last_updated', '--')
-    }
+    if not isinstance(temp, (int, float)) or not isinstance(precip, (int, float)):
+        return '--'
     
-    return {
-        'text': (
-            f"{time_text} {city}:\n"
-            f"• Temperature: {weather_data['temperature']}°C\n"
-            f"• Condition: {weather_data['condition']}\n"
-            f"• Humidity: {weather_data['humidity']}%\n"
-            f"• Precipitation: {weather_data['precipitation']}mm\n"
-            f"• Wind Speed: {weather_data['wind_speed']} km/h\n"
-            f"• Last Updated: {weather_data['last_updated']}"
-        ),
-        'data': weather_data
-    }
-
-def format_analytics_response(city, data, time_context=None):
-    """Format analytics API response"""
-    if not time_context:
-        weather_data = {
-            'city': city,
-            'historical_days': len(data.get('historical', {}).get('dates', [])),
-            'forecast_days': len(data.get('forecast', {}).get('dates', []))
-        }
-        
-        return {
-            'text': (
-                f"Weather data for {city}:\n"
-                f"• Historical: {weather_data['historical_days']} days available\n"
-                f"• Forecast: {weather_data['forecast_days']} days available\n"
-                "For detailed data, please visit the Analytics section."
-            ),
-            'data': weather_data
-        }
-    
-    return {
-        'text': "I can provide detailed weather analytics. Please specify if you want historical or forecast data.",
-        'data': {'city': city}
-    }
+    if (temp >= 26 or temp <= 20) and precip > 50:
+        return 'Rainy'
+    elif temp > 27:
+        return 'Sunny'
+    elif temp > 23:
+        return 'Partly Cloudy'
+    return 'Cloudy'

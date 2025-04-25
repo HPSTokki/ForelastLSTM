@@ -9131,8 +9131,118 @@ name,datetime,tempmax,tempmin,temp,humidity,precip,windspeed
 "Mandaluyong, NCR",2024-12-29,29.1,23,25.9,83.2,2.347,16
 "Mandaluyong, NCR",2024-12-30,30,23.7,26,93.1,8.444,14.4
 "Mandaluyong, NCR",2024-12-31,32,24.1,27.4,83.4,3.713,14.4
+"Mandaluyong, National Capital Region, Philippines",2025-01-01,29.1,25.6,27.2,84.3,0.851,16.5
+"Mandaluyong, National Capital Region, Philippines",2025-01-02,32,25.3,28.2,77.8,0,11.8
+"Mandaluyong, National Capital Region, Philippines",2025-01-03,30.4,25.7,27.7,81.1,0.669,11.1
+"Mandaluyong, National Capital Region, Philippines",2025-01-04,31,24.6,27.3,77.5,2.803,14.5
+"Mandaluyong, National Capital Region, Philippines",2025-01-05,30.4,25,26.7,67.6,0,19.9
+"Mandaluyong, National Capital Region, Philippines",2025-01-06,29.4,24.1,26.5,76.2,0,14.4
+"Mandaluyong, National Capital Region, Philippines",2025-01-07,30,24.1,26.5,78.4,0.024,14.2
+"Mandaluyong, National Capital Region, Philippines",2025-01-08,30,25,27.2,74.2,0.002,20.1
+"Mandaluyong, National Capital Region, Philippines",2025-01-09,30.3,25.2,27.3,71.4,0,23.2
+"Mandaluyong, National Capital Region, Philippines",2025-01-10,30.2,24.9,27,70.4,0,18.3
+"Mandaluyong, National Capital Region, Philippines",2025-01-11,29.5,25.3,27.3,72,0.104,17.1
+"Mandaluyong, National Capital Region, Philippines",2025-01-12,28.9,24.6,26.5,74.6,0.219,15.1
+"Mandaluyong, National Capital Region, Philippines",2025-01-13,29.7,24.5,27,73.9,0.072,22.3
+"Mandaluyong, National Capital Region, Philippines",2025-01-14,29.8,25.1,27.4,77.3,0.148,21
+"Mandaluyong, National Capital Region, Philippines",2025-01-15,30.7,24.5,27.7,78.8,0,12
+"Mandaluyong, National Capital Region, Philippines",2025-01-16,32.3,24.5,27.9,73,0.024,20.5
+"Mandaluyong, National Capital Region, Philippines",2025-01-17,31.4,24.4,27.5,73.7,0,22.1
+"Mandaluyong, National Capital Region, Philippines",2025-01-18,31.5,25,27.8,74.7,0.006,23.3
+"Mandaluyong, National Capital Region, Philippines",2025-01-19,30.6,24.4,27.5,79.4,0.071,25
+"Mandaluyong, National Capital Region, Philippines",2025-01-20,29.6,25.6,27.3,82,0.024,20.7
+"Mandaluyong, National Capital Region, Philippines",2025-01-21,31.5,25,27.7,75.1,0,22.8
+"Mandaluyong, National Capital Region, Philippines",2025-01-22,30.4,24.7,27.6,72,0,23
+"Mandaluyong, National Capital Region, Philippines",2025-01-23,31.1,24.4,27.4,72.3,0,20.1
+"Mandaluyong, National Capital Region, Philippines",2025-01-24,31.6,25,28.4,73.9,0,22
+"Mandaluyong, National Capital Region, Philippines",2025-01-25,31.5,24.7,28.1,76,0,16.7
+"Mandaluyong, National Capital Region, Philippines",2025-01-26,31.1,25,27.6,75.3,0.012,15.5
+"Mandaluyong, National Capital Region, Philippines",2025-01-27,30.6,24,26.8,69.3,0,16.3
+"Mandaluyong, National Capital Region, Philippines",2025-01-28,29.7,22.9,26.1,70.7,0,14.2
+"Mandaluyong, National Capital Region, Philippines",2025-01-29,29.7,23.4,26.7,69.3,0,28.1
+"Mandaluyong, National Capital Region, Philippines",2025-01-30,29.8,25.2,27.1,68.1,0.109,32.3
+"Mandaluyong, National Capital Region, Philippines",2025-01-31,29.8,24,26.9,79.9,0.771,22.1
+"Mandaluyong, National Capital Region, Philippines",2025-02-01,32.3,25.3,28.6,69.3,0,16.4
+"Mandaluyong, National Capital Region, Philippines",2025-02-02,33,24.4,28.6,72.9,0,14.5
+"Mandaluyong, National Capital Region, Philippines",2025-02-03,31,25.7,27.9,76.6,0,17
+"Mandaluyong, National Capital Region, Philippines",2025-02-04,29.1,25,26.7,78.2,1.084,13.2
+"Mandaluyong, National Capital Region, Philippines",2025-02-05,31.3,24.4,27,70,0.008,24.6
+"Mandaluyong, National Capital Region, Philippines",2025-02-06,29.9,24,26.6,71.4,0.351,14.9
+"Mandaluyong, National Capital Region, Philippines",2025-02-07,29,24.8,26.5,80.5,0.436,13
+"Mandaluyong, National Capital Region, Philippines",2025-02-08,29.9,24.1,26.4,79.3,1.29,20.1
+"Mandaluyong, National Capital Region, Philippines",2025-02-09,29.4,23.4,25.9,77.9,1.748,18.6
+"Mandaluyong, National Capital Region, Philippines",2025-02-10,29.5,24.6,26.6,78.7,4.675,27.7
+"Mandaluyong, National Capital Region, Philippines",2025-02-11,30.6,24.4,27,83.7,0.821,19.4
+"Mandaluyong, National Capital Region, Philippines",2025-02-12,32.8,26,28.8,72.5,0,20.7
+"Mandaluyong, National Capital Region, Philippines",2025-02-13,31.6,25.3,28.1,78.8,19.646,19.5
+"Mandaluyong, National Capital Region, Philippines",2025-02-14,30.6,26,27.9,79,2.823,15.6
+"Mandaluyong, National Capital Region, Philippines",2025-02-15,31.5,25.1,28.2,78.4,0,9.9
+"Mandaluyong, National Capital Region, Philippines",2025-02-16,33,26.1,29.3,73.7,0.182,15.8
+"Mandaluyong, National Capital Region, Philippines",2025-02-17,31.3,26.1,28.8,74.2,13.266,18
+"Mandaluyong, National Capital Region, Philippines",2025-02-18,30.5,25.7,27.8,76.5,6.821,19.6
+"Mandaluyong, National Capital Region, Philippines",2025-02-19,30.7,25.3,27.9,68.5,0,32.2
+"Mandaluyong, National Capital Region, Philippines",2025-02-20,29.6,24.8,26.5,78.8,1.274,18.7
+"Mandaluyong, National Capital Region, Philippines",2025-02-21,30.4,25.8,27.5,74.3,0.169,19.8
+"Mandaluyong, National Capital Region, Philippines",2025-02-22,31.2,25.9,28,65.1,0,25
+"Mandaluyong, National Capital Region, Philippines",2025-02-23,31.4,25.5,28.2,64.4,0,22.8
+"Mandaluyong, National Capital Region, Philippines",2025-02-24,30.5,24,27.3,68.1,0.053,22.3
+"Mandaluyong, National Capital Region, Philippines",2025-02-25,29.2,24.2,26.5,73.5,0.142,28.3
+"Mandaluyong, National Capital Region, Philippines",2025-02-26,29.1,23.6,26.4,69,0.047,20.1
+"Mandaluyong, National Capital Region, Philippines",2025-02-27,30.8,23.3,26.7,65.1,0,20.5
+"Mandaluyong, National Capital Region, Philippines",2025-02-28,32,23.4,27.5,66.4,0,17.6
+"Mandaluyong, National Capital Region, Philippines",2025-03-01,32,24.6,28.4,67.4,0.009,20.1
+"Mandaluyong, National Capital Region, Philippines",2025-03-02,33.8,25.5,28.9,71.5,0.036,19.2
+"Mandaluyong, National Capital Region, Philippines",2025-03-03,34,25.8,28.8,66.7,0.01,22.5
+"Mandaluyong, National Capital Region, Philippines",2025-03-04,32.5,27.1,29.4,67.2,0,24.1
+"Mandaluyong, National Capital Region, Philippines",2025-03-05,34.1,26.4,30,69.3,0,16.5
+"Mandaluyong, National Capital Region, Philippines",2025-03-06,34.2,26.3,30.1,68.3,0,36.1
+"Mandaluyong, National Capital Region, Philippines",2025-03-07,32,25.8,28.8,69.8,0.459,23.3
+"Mandaluyong, National Capital Region, Philippines",2025-03-08,29,26.3,27.4,78.9,14.224,17.4
+"Mandaluyong, National Capital Region, Philippines",2025-03-09,31,25.7,27.9,77.3,2.378,21.6
+"Mandaluyong, National Capital Region, Philippines",2025-03-10,32.1,25.4,28.6,71.4,0.043,21.9
+"Mandaluyong, National Capital Region, Philippines",2025-03-11,32,25.9,28.6,71.6,0,22.3
+"Mandaluyong, National Capital Region, Philippines",2025-03-12,33.8,25.2,29,67.1,0,18.7
+"Mandaluyong, National Capital Region, Philippines",2025-03-13,33.3,26,29.4,62.9,0,21.6
+"Mandaluyong, National Capital Region, Philippines",2025-03-14,33.5,25,29.2,63.1,0,22.3
+"Mandaluyong, National Capital Region, Philippines",2025-03-15,33,24.2,28.5,67.6,0,14.4
+"Mandaluyong, National Capital Region, Philippines",2025-03-16,32.4,25,28.9,69.2,0,18.8
+"Mandaluyong, National Capital Region, Philippines",2025-03-17,30,25.4,28.1,72.3,0.211,18.2
+"Mandaluyong, National Capital Region, Philippines",2025-03-18,31.7,25.8,28.4,69.7,0.029,17.8
+"Mandaluyong, National Capital Region, Philippines",2025-03-19,31.7,25.3,28,72.3,0.012,19.4
+"Mandaluyong, National Capital Region, Philippines",2025-03-20,29,25.8,26.9,74.8,0.482,20.6
+"Mandaluyong, National Capital Region, Philippines",2025-03-21,29.5,25,27.2,69.9,0,23.7
+"Mandaluyong, National Capital Region, Philippines",2025-03-22,30.1,23.7,26.7,67.4,0,15.6
+"Mandaluyong, National Capital Region, Philippines",2025-03-23,32.4,23.7,27.4,67,0,22.3
+"Mandaluyong, National Capital Region, Philippines",2025-03-24,32.4,24,28.2,68.4,0,18.6
+"Mandaluyong, National Capital Region, Philippines",2025-03-25,34.1,26,29.7,67.8,0,18
+"Mandaluyong, National Capital Region, Philippines",2025-03-26,33.6,25.7,29.9,66.2,0,20
+"Mandaluyong, National Capital Region, Philippines",2025-03-27,34,27.2,30.2,67.2,0,17.2
+"Mandaluyong, National Capital Region, Philippines",2025-03-28,33.7,27.5,30.1,70.3,0.024,21.9
+"Mandaluyong, National Capital Region, Philippines",2025-03-29,31,25.9,27.7,83,2.819,26.5
+"Mandaluyong, National Capital Region, Philippines",2025-03-30,31.3,26.6,28.8,73.1,0.032,21
+"Mandaluyong, National Capital Region, Philippines",2025-03-31,31.4,26.1,28.8,72.9,0.016,32
+"Mandaluyong, National Capital Region, Philippines",2025-04-01,33.2,25.4,29.4,71.2,0,17.6
+"Mandaluyong, National Capital Region, Philippines",2025-04-02,33.3,26.8,30,65.7,0,14.9
+"Mandaluyong, National Capital Region, Philippines",2025-04-03,34,26.8,30,68.1,0,16.9
+"Mandaluyong, National Capital Region, Philippines",2025-04-04,33.3,27,30.1,67.8,0,18.2
+"Mandaluyong, National Capital Region, Philippines",2025-04-05,32.6,25.8,29.2,72.2,30.735,15.8
+"Mandaluyong, National Capital Region, Philippines",2025-04-06,34.3,25.8,29.9,67.4,0.009,18.3
+"Mandaluyong, National Capital Region, Philippines",2025-04-07,34.6,26.8,30.5,67,0,18.7
+"Mandaluyong, National Capital Region, Philippines",2025-04-08,33.5,26.8,30.3,68,0.908,20.5
+"Mandaluyong, National Capital Region, Philippines",2025-04-09,34.5,26.9,30.6,63.3,0,19.1
+"Mandaluyong, National Capital Region, Philippines",2025-04-10,35.4,26.4,30.4,65.1,0,19.8
+"Mandaluyong, National Capital Region, Philippines",2025-04-11,34.8,28.4,31,67.1,0,18.6
+"Mandaluyong, National Capital Region, Philippines",2025-04-12,36,27,31.1,63.3,0,17.8
+"Mandaluyong, National Capital Region, Philippines",2025-04-13,36,27.6,30.6,70.1,0.937,33.5
+"Mandaluyong, National Capital Region, Philippines",2025-04-14,35,27.1,30.9,69,0,14.8
+"Mandaluyong, National Capital Region, Philippines",2025-04-15,35,27.8,30.4,70.5,0,19.8
 "Mandaluyong City, National Capital Region, Philippines",2025-04-16,37.0,29.0,31.9,61.7,2.0,16.6
 "Mandaluyong City, National Capital Region, Philippines",2025-04-17,37.0,26.0,31.3,61.3,0.0,20.5
 "Mandaluyong City, National Capital Region, Philippines",2025-04-18,36.0,25.0,31.0,62.3,0.6,24.1
 "Mandaluyong City, National Capital Region, Philippines",2025-04-19,34.8,28.0,30.7,58.7,0.3,29.5
 "Mandaluyong City, National Capital Region, Philippines",2025-04-20,34.1,27.0,30.9,58.9,0.0,27.4
+"Mandaluyong City, National Capital Region, Philippines",2025-04-21,34.4,28.0,31.1,60.6,0.2,29.9
+"Mandaluyong City, National Capital Region, Philippines",2025-04-22,36.0,26.9,31.9,59.8,0.0,14.8
+"Mandaluyong City, National Capital Region, Philippines",2025-04-23,36.0,28.0,31.6,71.2,0.3,20.5
+"Mandaluyong City, National Capital Region, Philippines",2025-04-24,36.0,28.8,31.8,61.8,0.0,16.9
+"Mandaluyong City, National Capital Region, Philippines",2025-04-25,37.0,28.0,31.5,58.7,0.0,24.8
