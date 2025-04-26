@@ -1,0 +1,9 @@
+name,datetime,tempmax,tempmin,temp,humidity,precip,windspeed
+"Pateros City, National Capital Region, Philippines",2025-04-19,36.0,28.5,31.7,60.1,0.0,20.5
+"Pateros City, National Capital Region, Philippines",2025-04-20,35.0,26.2,31.3,59.7,0.0,20.5
+"Pateros City, National Capital Region, Philippines",2025-04-21,35.1,28.0,31.5,62.2,0.0,20.5
+"Pateros City, National Capital Region, Philippines",2025-04-22,36.0,27.5,31.9,59.7,0.0,14.8
+"Pateros City, National Capital Region, Philippines",2025-04-23,36.0,27.9,31.6,71.0,0.2,20.5
+"Pateros City, National Capital Region, Philippines",2025-04-24,36.0,29.0,31.9,62.0,0.0,14.8
+"Pateros City, National Capital Region, Philippines",2025-04-25,37.0,28.0,31.9,58.9,0.0,13.0
+"Pateros City, National Capital Region, Philippines",2025-04-26,35.0,27.0,31.1,57.2,0.0,32.4

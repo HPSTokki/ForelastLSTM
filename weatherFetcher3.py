@@ -23,7 +23,7 @@ supabase: Client = create_client(supabase_url, supabase_key)
 
 cities = ['Caloocan', 'Las Piñas', 'Makati', 'Malabon', 'Mandaluyong', 
           'Manila', 'Marikina', 'Muntinlupa', 'Navotas', 'Parañaque',
-          'Pasay', 'Pasig', 'Quezon', 'San Juan', 'Taguig', 'Valenzuela']
+          'Pasay', 'Pasig','Pateros', 'Quezon', 'San Juan', 'Taguig', 'Valenzuela']
 
 CSV_COLUMNS = ['name', 'datetime', 'tempmax', 'tempmin', 'temp', 
                'humidity', 'precip', 'windspeed']
