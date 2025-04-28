@@ -43,7 +43,7 @@ class CurrentWeatherAPI(View):
                 )
                 
             current_data = response.data[0]
-            
+
             return JsonResponse({
                 'city': city.title(),
                 'temperature': current_data.get('temp', '--'),
